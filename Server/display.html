@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<head>
+    <title>Affichage de données</title>
+    <meta charset="utf-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.19.0/URI.min.js"></script>
+</head>
+<body>
+    <canvas id="chart" width="800" height="400"></canvas>
+    <script>
+        var ctx = document.getElementById("chart").getContext("2d");
+
+        var config = new Object();
+        config.type = "line";
+        config.options = {
+            legend: {
+                display: false
+            },            
+            responsive: false,
+            maintainAspectRatio: true,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        };
+
+        // demande données
+        var url = new URI(document.location.href);
+        var result = URI.parseQuery(document.location.search);
+        var x = result.x; var y = result.y;
+        url.removeSearch("x");url.removeSearch("y");url.removeSearch("chart");
+        url.addSearch("find");
+        var jsonURL = "http://"+ document.location.host + "/?" + url._parts.query;
+        var req = new XMLHttpRequest();
+        req.open('GET', jsonURL, false);
+        req.send(null);
+
+        if (req.status === 200) dataDevice = JSON.parse(req.responseText);
+        else console.log("Ça marche pas")
+
+        // reception données
+        
+        config.data = new Object();
+        var labelGraph = new Array;
+        var dataGraph = new Array;
+        for (doc of dataDevice){
+            let valeur = Number(doc.valeur);
+            if (doc[y] != NaN) {
+                (x && doc[x] != undefined) ? labelGraph.push(doc[x]) : labelGraph.push("");
+                dataGraph.push(doc[y]);
+            }
+        }
+        config.data.labels = labelGraph;
+        config.data.datasets = [{
+            data: dataGraph,
+            fill: false,
+            borderColor: 'rgba(255, 0, 0, 1)',
+            label: " "
+        }];
+        var chart = new Chart(ctx, config);
+    </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+{
+  "name": "monitoanneau",
+  "version": "1.0.0",
+  "description": "Prendre des petits bouts de trucs pour les assembler ensemble",
+  "main": "index.js",
+  "dependencies": {
+    "chart.js": "^2.7.1",
+    "mongodb": "^3.0.1",
+    "request": "^2.83.0",
+    "serialport": "^6.0.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Funigtor/MonitoAnneau.git"
+  },
+  "author": "ISEN",
+  "license": "WTFPL",
+  "bugs": {
+    "url": "https://github.com/Funigtor/MonitoAnneau/issues"
+  },
+  "homepage": "https://github.com/Funigtor/MonitoAnneau#readme"
+}
